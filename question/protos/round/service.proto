@@ -1,0 +1,13 @@
+syntax = "proto3";
+option go_package = "round";
+package round;
+
+import "protos/round/message.proto";
+
+service RoundService {
+    rpc List (ListRoundRequest) returns (ListRoundResponse);
+    rpc Get (GetRoundRequest) returns (GetRoundResponse);
+    rpc Create(CreateRoundRequest) returns (CreateRoundResponse);
+    rpc Update(UpdateRoundRequest) returns (UpdateRoundResponse);
+    rpc Delte(DeleteRoundRequest) returns (DeleteRoundResponse);
+}
