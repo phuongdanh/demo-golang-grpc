@@ -4,7 +4,11 @@
 <header class="jumbotron" style="background-color:#A9F16C">
   <div class="container">
     <div class="row">
+      {{template "nav.html" .}}
+    </div>
+    <div class="row">
       <h1>It works!</h1>
+      <p>Server {{ .serverUrl }}</p>
     </div>
   </div>
 </header>

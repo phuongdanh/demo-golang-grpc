@@ -6,11 +6,7 @@ import (
 )
 
 func Conn() (db *sql.DB) {
-    dbDriver := "mysql"
-    dbUser := "root"
-    dbPass := ""
-    dbName := "questions"
-    db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
+    db, err := sql.Open("mysql", "root:@tcp(localhost:2323)/questions")
     if err != nil {
         panic(err.Error())
     }

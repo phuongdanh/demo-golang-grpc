@@ -22,13 +22,21 @@ func (c Round) Index() revel.Result {
 		connectionStatus = "Connnection failed"
 		fmt.Println(err)
 	} else {
-		connectionStatus = "Connnection successful"
 		roundClient := round.NewRoundServiceClient(conn)
-		header := metadata.New(map[string]string{"authorization": "tokend", "space":  "", "org": "", "limit": "", "offset": ""})
+		header := metadata.New(map[string]string{
+			"authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDAyNTEzNjAsImRhdGEiOnsiZW1haWwiOiJ0dXBodW9uZ2RhbmgxOTk2QGdtYWlsLmNvbSIsImV4cCI6MTYwMDMxMTMwMCwiaWQiOjEsIm5hbWUiOiJU4burIFBoxrDGoW5nIERhbmgiLCJyb2xlIjoiYWRtaW4ifX0.IY9crnZOxIxtaeeH3fVLh4ZTwIGPiA5y9qA3spOLN38", 
+			"space":  "", 
+			"org": "", 
+			"limit": "", 
+			"offset": "",
+		})
 		ctx := metadata.NewOutgoingContext(context.Background(), header)
 		response, err := roundClient.List(ctx, &round.ListRoundRequest{})
 		if err != nil {
 			fmt.Println(err.Error())
+			connectionStatus = "Connnection failed"
+		} else {
+			connectionStatus = "Connnection successful"
 		}
 		return c.Render(connectionStatus, response)
 	}

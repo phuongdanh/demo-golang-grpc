@@ -6,9 +6,11 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"os"
 
 	"google.golang.org/grpc"
 	level "my-app/app/protos/level"
+	"google.golang.org/grpc/metadata"
 )
 
 type App struct {
@@ -23,8 +25,14 @@ const (
 )
 
 func getListLevel(client level.LevelServiceClient, rect *level.ListLevelRequest) ([]*level.LevelMessage) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
+	header := metadata.New(map[string]string{
+		"authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDAyNTEzNjAsImRhdGEiOnsiZW1haWwiOiJ0dXBodW9uZ2RhbmgxOTk2QGdtYWlsLmNvbSIsImV4cCI6MTYwMDMxMTMwMCwiaWQiOjEsIm5hbWUiOiJU4burIFBoxrDGoW5nIERhbmgiLCJyb2xlIjoiYWRtaW4ifX0.IY9crnZOxIxtaeeH3fVLh4ZTwIGPiA5y9qA3spOLN38", 
+		"space":  "", 
+		"org": "", 
+		"limit": "", 
+		"offset": "",
+	})
+	ctx := metadata.NewOutgoingContext(context.Background(), header)
 	r, err := client.List(ctx, rect)
 	if err != nil {
 		fmt.Printf("could not get list: %v", err)
@@ -44,6 +52,7 @@ func getOneLevel(client level.LevelServiceClient, rect *level.GetLevelRequest) {
 }
 
 func (c App) Index() revel.Result {
+	serverUrl := os.Getenv("SERVER_URL")
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		fmt.Printf("did not connect: %v", err)
@@ -52,5 +61,5 @@ func (c App) Index() revel.Result {
 	client := level.NewLevelServiceClient(conn)
 	levels := getListLevel(client, &level.ListLevelRequest{})
 	getOneLevel(client, &level.GetLevelRequest{Id: 1})
-	return c.Render(levels)
+	return c.Render(levels, serverUrl)
 }
