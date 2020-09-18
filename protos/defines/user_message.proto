@@ -1,0 +1,47 @@
+syntax = "proto3";
+option go_package = ".;protos";
+package protos;
+
+message UserMessage {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+  string created_at = 5;
+  string updated_at = 6;
+  string deleted_at = 7;
+}
+
+message ListUserRequest {
+}
+message ListUserResponse {
+  repeated UserMessage items = 1;
+}
+
+message GetUserRequest {
+  int32 id = 1;
+}
+message GetUserResponse {
+  UserMessage item = 1;
+}
+
+message CreateUserRequest {
+  UserMessage item = 1;
+}
+message CreateUserResponse {
+  UserMessage item = 1;
+}
+
+message UpdateUserRequest {
+  int32 id = 1;
+  UserMessage item = 2;
+}
+message UpdateUserResponse {
+  UserMessage item = 1;
+}
+
+message DeleteUserRequest {
+  int32 id = 1;
+}
+message DeleteUserResponse {
+}

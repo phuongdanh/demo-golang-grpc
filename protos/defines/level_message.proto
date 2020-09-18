@@ -1,0 +1,47 @@
+syntax = "proto3";
+option go_package = ".;protos";
+package protos;
+
+message LevelMessage {
+    int32 id = 1;
+    string name = 2;
+    float default_score = 3;
+    string created_at = 4;
+    string updated_at = 5;
+    string deleted_at = 6;
+}
+
+message ListLevelRequest {}
+
+message ListLevelResponse {
+    repeated LevelMessage items = 1;
+}
+
+message GetLevelRequest {
+    int32 id = 1;
+}
+message GetLevelResponse {
+    LevelMessage item = 1;
+}
+
+message CreateLevelRequest {
+    string name = 1;
+    float default_score = 2;
+}
+message CreateLevelResponse {
+    LevelMessage item = 1;
+}
+
+message UpdateLevelRequest {
+    int32 id = 1;
+    string name = 2;
+    float default_score = 3;
+}
+message UpdateLevelResponse {
+    LevelMessage item = 1;
+}
+
+message DeleteLevelRequest {
+    int32 id = 1;
+}
+message DeleteLevelResponse {}

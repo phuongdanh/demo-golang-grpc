@@ -1,0 +1,41 @@
+syntax = "proto3";
+option go_package = ".;protos";
+package protos;
+
+message RoundMessage {
+    string Id = 1;
+    string Name = 2;
+    float  Score = 3;
+}
+
+message ListRoundRequest {}
+message ListRoundResponse {
+    repeated RoundMessage items = 1;
+}
+
+message GetRoundRequest {
+    string Id = 1;
+}
+message GetRoundResponse {
+    RoundMessage item = 1;
+}
+
+message CreateRoundRequest {
+    RoundMessage item = 1;
+}
+message CreateRoundResponse {
+    RoundMessage item = 1;
+}
+
+message UpdateRoundRequest {
+    string Id = 1;
+    RoundMessage item = 2;
+}
+message UpdateRoundResponse {
+    RoundMessage item = 1;
+}
+
+message DeleteRoundRequest {
+    string Id = 1;
+}
+message DeleteRoundResponse {}

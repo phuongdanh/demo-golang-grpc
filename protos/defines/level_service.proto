@@ -1,0 +1,19 @@
+syntax = "proto3";
+option go_package = ".;protos";
+package protos;
+
+import "level_message.proto";
+
+service LevelService {
+
+    rpc list (ListLevelRequest) returns (ListLevelResponse) {}
+  
+    rpc get (GetLevelRequest) returns (GetLevelResponse) {}
+  
+    rpc create (CreateLevelRequest) returns (CreateLevelResponse) {}
+  
+    rpc update (UpdateLevelRequest) returns (UpdateLevelResponse) {}
+  
+    rpc delete (DeleteLevelRequest) returns (DeleteLevelResponse) {}
+  
+}
