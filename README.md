@@ -1,84 +1,51 @@
+# Welcome to the board
 
-# How it works
-follow steps: 1 -> 2 -> 3(3.1 or 3.2)
+This project is purpose to understand how to use GRPC in Golang
 
-## 1. Prepare tools
-```
-// install protobuf:
-// for MacOS:
-➜  brew install protobuf
+## Structure
 
-//for other:
-http://google.github.io/proto-lens/installing-protoc.html
+  There are three parts in this system
+  - Backend
+  - Frontend
+  - Proto files
 
-// install grpc-gateway
-➜  go install \
-  github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
-  github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
-```
+## Configuration
 
-## 2. Getting started for developer
-```
-// rename
-➜  cp .env.example .env
+  > Copy file .env.example to .env and edit your environment
 
-➜  make gen_proto
+  **Generate the protoc file, make sure you are one root dir.**
+  ```
+  make gen-proto
+  ```
+  **If you want to generate particular file, set file=<filename> without the extension**
+  ```
+  make gen-proto file=<file_name>
+  ```
+  For example you have now file named. admin_message.proto
+  You can run:
+  ```
+  make gen-proto file=admin_message
+  ```
+  It will generate proto files, check it by looking at the ./backend/protos and ./frontend/protos
 
-// 2.1 For local OS: MacOS, Window, Linux -> executable binary regarding to OS
-➜  make build
-
-// 2.2 build Linux executable binary only
-➜  sudo make build_linux
-
-```
-
-
-## 3. Run Service
-
-### 3.1 Getting started for local
-
-```
-//prepare DB
-➜  mysql -u root -p
-// Enter password : 123
-
-➜  CREATE DATABASE utm_registration;
-
-➜  exit;
+## Run app:
+  The system build with pure Golang for backend and Revel framework for frontend
 
 
-//run executable binaries
-!!! For docker you don't need this step, it's automatic !!!
+### Run backend:
 
-// For migrate DB
-➜  make migrate
+  Run following command line at root folder
 
-// For seed DB
-➜  make seed
+  ```
+  make serve-backend
+  ```
 
-// Start server
-➜  make serve
+### Run frontend
 
-```
+  Run following command line at root folder and open your browser to run generated host
+  ```
+  make serve-backend
+  ```
 
-### 3.2 Getting started for production
-
-```
-// !!! no need to re-build source code again, just mount executable binary and run !!! 
-➜  make down
-➜  make up
-```
-
-## Testing
-```
-➜  go test -v ./... -cover
-```
-
-## Example REST URL
-```
-POST http://localhost:8080/v1/auth/login
-{
-	"username": "sadmin",
-	"password": "123456"
-}
-```
+## Help
+  If you encourage any problem, please find the solution or make new issue [here](https://github.com/phuongdanh/demo-golang-grpc/issues).
