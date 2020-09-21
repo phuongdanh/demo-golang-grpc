@@ -1,0 +1,13 @@
+syntax = "proto3";
+option go_package = ".;protos";
+package protos;
+
+import "user_message.proto";
+
+service UserService {
+  rpc list (ListUserRequest) returns (ListUserResponse);
+  rpc get (GetUserRequest) returns (GetUserResponse);
+  rpc create (CreateUserRequest) returns (CreateUserResponse);
+  rpc update (UpdateUserRequest) returns (UpdateUserResponse);
+  rpc delete (DeleteUserRequest) returns (DeleteUserResponse);
+}

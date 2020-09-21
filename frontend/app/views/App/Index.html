@@ -1,0 +1,49 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<header class="jumbotron" style="background-color:#A9F16C">
+  <div class="container">
+    <div class="row">
+      {{template "nav.html" .}}
+    </div>
+    <div class="row">
+      <h1>List of levels</h1>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+    <div class="col-md-12">
+      <div class="pull-right">
+        <a href="/levels/create" class="btn btn-default">+ Add new</a>
+      </div>
+      <div class="clearfix"></div>
+      <table class="table table-striped table-bordered" style="margin-top: 15px">
+        <thead>
+          <tr>
+            <th>#ID</th>
+            <th>Name</th>
+            <th>Default score</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{range $index, $level := .levels}}
+          <tr>
+            <td>{{ $level.Id }}</td>
+            <td>{{ $level.Name }}</td>
+            <td>{{ $level.DefaultScore }}</td>
+            <td>{{ $level.CreatedAt }}</td>
+          </tr>
+        {{end}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{{template "footer.html" .}}

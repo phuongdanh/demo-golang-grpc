@@ -1,0 +1,9 @@
+syntax = "proto3";
+option go_package = ".;protos";
+package protos;
+
+import "auth_message.proto";
+
+service AuthService {
+  rpc login (LoginRequest) returns (LoginResponse);
+}
