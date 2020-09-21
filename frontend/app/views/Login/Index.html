@@ -30,6 +30,15 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+      <br/>
+      {{ if .IsPost }}
+        {{ if .Token }}
+        <label>Token: </label>
+        <textarea class="form-control" rows="10">{{ .Token }}</textarea>
+        {{ else }}
+        <div class="alert alert-danger">Login failed</div>
+        {{ end }}
+      {{ end }}
     </div>
   </div>
 </div>

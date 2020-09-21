@@ -27,7 +27,7 @@ func Data() map[string]interface{} {
 func Create(data map[string]interface{}) string {
 	claimData := UserClaim{
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Minute * 1).Unix(),
+			ExpiresAt: time.Now().Add(time.Minute * 1000).Unix(),
 		},
 		data,
 	}

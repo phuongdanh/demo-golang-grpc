@@ -1,0 +1,45 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<header class="jumbotron" style="background-color:#A9F16C">
+  <div class="container">
+    <div class="row">
+      {{template "nav.html" .}}
+    </div>
+    <div class="row">
+      <h1>Create level</h1>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+    <div class="col-md-4 col-md-offset-4 mt-3 mb-3">
+      <form action="/levels/create" method="POST">
+        <div class="form-group">
+          <label for="InputName1">Name</label>
+          <input type="text" class="form-control" id="InputName1" placeholder="Enter name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="InputScore1">Default score</label>
+          <input type="number" class="form-control" id="InputScore1" placeholder="Enter Default Score" name="default_score">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <br/>
+      {{ if .IsPost }}
+        {{ if .Token }}
+        <label>Token: </label>
+        <textarea class="form-control" rows="10">{{ .Token }}</textarea>
+        {{ else }}
+        <div class="alert alert-danger">Login failed</div>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+{{template "footer.html" .}}

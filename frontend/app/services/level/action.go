@@ -2,11 +2,10 @@ package level
 
 import (
 	"log"
-	"context"
-	"time"
 	pb "my-app/app/protos"
 	"my-app/app/services"
-	"google.golang.org/grpc/metadata"
+	"my-app/app/utils"
+	"google.golang.org/grpc/status"
 )
 type Action struct {
 
@@ -18,27 +17,30 @@ func client() pb.LevelServiceClient {
 }
 
 func (this *Action) List() ([]*pb.LevelMessage, error) {
-	header := metadata.New(map[string]string{
-		"authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDAyNTEzNjAsImRhdGEiOnsiZW1haWwiOiJ0dXBodW9uZ2RhbmgxOTk2QGdtYWlsLmNvbSIsImV4cCI6MTYwMDMxMTMwMCwiaWQiOjEsIm5hbWUiOiJU4burIFBoxrDGoW5nIERhbmgiLCJyb2xlIjoiYWRtaW4ifX0.IY9crnZOxIxtaeeH3fVLh4ZTwIGPiA5y9qA3spOLN38", 
-		"space":  "", 
-		"org": "", 
-		"limit": "", 
-		"offset": "",
-	})
-	ctx := metadata.NewOutgoingContext(context.Background(), header)
 	client := services.Client{}
-	res, err := client.Level().List(ctx, &pb.ListLevelRequest{})
+	res, err := client.Level().List(utils.ContextRequest(), &pb.ListLevelRequest{})
 	if err != nil {
-		log.Printf("Could not get list of level, %v", err)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.Printf("Uknown error")
+		} else {
+			log.Printf("Response error with code is %v and message: %v", st.Code(), st.Message())
+		}
 		return nil, err
 	}
 	return res.GetItems(), nil
 }
 
 func (this *Action) Get(rect *pb.GetLevelRequest) (*pb.LevelMessage, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	res, err := client().Get(ctx, rect)
+	res, err := client().Get(utils.ContextRequest(), rect)
+	if err != nil {
+		return nil, err
+	}
+	return res.GetItem(), nil
+}
+
+func (this *Action) Create(rect *pb.CreateLevelRequest) (*pb.LevelMessage, error) {
+	res, err := client().Create(utils.ContextRequest(), rect);
 	if err != nil {
 		return nil, err
 	}

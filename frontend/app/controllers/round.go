@@ -16,7 +16,7 @@ type Round struct {
 }
 
 func (c Round) Index() revel.Result {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, err := grpc.Dial("0.0.0.0:50052", grpc.WithInsecure())
 	var connectionStatus string
 	if err != nil {
 		connectionStatus = "Connnection failed"

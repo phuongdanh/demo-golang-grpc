@@ -18,10 +18,12 @@ func (c Login) Index() revel.Result {
 func (c Login) DoLogin() revel.Result {
 	email := c.Params.Form.Get("email")
 	password := c.Params.Form.Get("password")
-	_, err := auth.Action{}.Login(email, password)
+	response, err := auth.Action{}.Login(email, password)
+	c.ViewArgs["IsPost"] = true
 	if err != nil {
 		log.Printf("Fail to login: %v", err.Error())
-		return c.Redirect(Login.Index)
+		return c.RenderTemplate("Login/Index.html")
 	}
-	return c.Redirect(App.Index)
+	c.ViewArgs["Token"] = response["token"]
+	return c.RenderTemplate("Login/Index.html")
 }

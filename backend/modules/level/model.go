@@ -12,7 +12,7 @@ type Model struct {
 	core.Model
 }
 
-func (Model) tableName() (string) {
+func (Model) TableName() (string) {
 	return "levels"
 }
 
@@ -22,5 +22,17 @@ func (this Model) ToMessage() (*pb.LevelMessage) {
 		Name: this.Name,
 		DefaultScore: this.Default_score,
 		CreatedAt: this.Created_at,
+	}
+}
+
+func (this Model) FromMessage(message *pb.LevelMessage) Model {
+	return Model{
+		Id: message.Id,
+		Name: message.Name,
+		Default_score: message.DefaultScore,
+		Model: core.Model{
+			Created_at: message.CreatedAt,
+			Updated_at: message.UpdatedAt,
+		},
 	}
 }

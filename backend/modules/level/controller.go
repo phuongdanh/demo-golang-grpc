@@ -3,10 +3,10 @@ package level
 
 import (
 	"context"
-	// "fmt"
-	// "io"
 	"log"
 	pb "question.app/demo/protos"
+	"google.golang.org/grpc/status"
+	"google.golang.org/grpc/codes"
 )
 
 var xampleLevel pb.LevelMessage = pb.LevelMessage{
@@ -34,5 +34,17 @@ func (s *Controller) Get(ctx context.Context, in *pb.GetLevelRequest) (*pb.GetLe
 	log.Printf("Server received request to get level at #%v", in.GetId())
 	return &pb.GetLevelResponse{
 		Item: &xampleLevel,
+	}, nil
+}
+
+func (s *Controller) Create(ctx context.Context, in *pb.CreateLevelRequest) (*pb.CreateLevelResponse, error) {
+	service := Service{}
+	item, err := service.Create(Model{Name: in.GetName(), Default_score: in.GetDefaultScore()})
+	if err != nil {
+		newErr := status.Errorf(codes.InvalidArgument, "Invalid argument")
+		return nil, newErr
+	}
+	return &pb.CreateLevelResponse{
+		Item: item.ToMessage(),
 	}, nil
 }

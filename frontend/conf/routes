@@ -8,6 +8,8 @@ module:testrunner
 
 
 GET     /                                       App.Index
+GET     /levels/create                          App.Create
+POST    /levels/create                          App.DoCreate
 GET     /contact                                Page.Contact
 GET     /about                                  Page.About
 GET     /round                                  Round.Index

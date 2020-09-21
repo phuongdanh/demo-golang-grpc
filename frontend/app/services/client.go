@@ -1,6 +1,7 @@
 package services
 
 import (
+	"log"
 	"google.golang.org/grpc"
 	pb "my-app/app/protos"
 )
@@ -14,7 +15,10 @@ type Client struct {}
 func (this *Client) Connection() grpc.ClientConnInterface {
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
+		log.Println("connect fail")
 		panic("Can not connect rpc server")
+	} else {
+		log.Println("connect ok")
 	}
 	return conn
 }
@@ -22,7 +26,10 @@ func (this *Client) Connection() grpc.ClientConnInterface {
 func (this *Client) Auth() pb.AuthServiceClient {
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
+		log.Println("connect fail")
 		panic("Can not connect rpc server")
+	} else {
+		log.Println("connect ok")
 	}
 	client := pb.NewAuthServiceClient(conn)
 	return client
