@@ -1,9 +1,10 @@
-module my-app
+module frontend
 
 go 1.14
 
 require (
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
+	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/garyburd/redigo v1.6.0 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect

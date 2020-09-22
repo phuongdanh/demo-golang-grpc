@@ -29,6 +29,7 @@
             <th>Name</th>
             <th>Default score</th>
             <th>Created</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +39,10 @@
             <td>{{ $level.Name }}</td>
             <td>{{ $level.DefaultScore }}</td>
             <td>{{ $level.CreatedAt }}</td>
+            <td>
+              <a class="btn btn-default" href="/levels/edit/{{ $level.Id }}">Edit</a>
+              <a class="btn btn-danger" href="/levels/delete/{{ $level.Id }}">Delete</a>
+            </td>
           </tr>
         {{end}}
         </tbody>

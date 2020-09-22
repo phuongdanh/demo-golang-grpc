@@ -2,8 +2,8 @@ package auth
 import (
 	"fmt"
 	"context"
-	"my-app/app/services"
-	pb "my-app/app/protos"
+	"frontend/app/services"
+	pb "frontend/app/protos"
 )
 
 type Action struct {}

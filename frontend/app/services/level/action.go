@@ -2,9 +2,9 @@ package level
 
 import (
 	"log"
-	pb "my-app/app/protos"
-	"my-app/app/services"
-	"my-app/app/utils"
+	pb "frontend/app/protos"
+	"frontend/app/services"
+	"frontend/app/utils"
 	"google.golang.org/grpc/status"
 )
 type Action struct {
@@ -45,4 +45,12 @@ func (this *Action) Create(rect *pb.CreateLevelRequest) (*pb.LevelMessage, error
 		return nil, err
 	}
 	return res.GetItem(), nil
+}
+
+func (this *Action) Delete(id int32) error {
+	_, err := client().Delete(utils.ContextRequest(), &pb.DeleteLevelRequest{Id: id})
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -22,6 +22,7 @@ type UserServiceClient interface {
 	Create(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	Update(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	Delete(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+	Upload(ctx context.Context, opts ...grpc.CallOption) (UserService_UploadClient, error)
 }
 
 type userServiceClient struct {
@@ -77,6 +78,40 @@ func (c *userServiceClient) Delete(ctx context.Context, in *DeleteUserRequest, o
 	return out, nil
 }
 
+func (c *userServiceClient) Upload(ctx context.Context, opts ...grpc.CallOption) (UserService_UploadClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_UserService_serviceDesc.Streams[0], "/protos.UserService/upload", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &userServiceUploadClient{stream}
+	return x, nil
+}
+
+type UserService_UploadClient interface {
+	Send(*UploadUserAvatarRequest) error
+	CloseAndRecv() (*UploadUserAvatarResponse, error)
+	grpc.ClientStream
+}
+
+type userServiceUploadClient struct {
+	grpc.ClientStream
+}
+
+func (x *userServiceUploadClient) Send(m *UploadUserAvatarRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *userServiceUploadClient) CloseAndRecv() (*UploadUserAvatarResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(UploadUserAvatarResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -86,6 +121,7 @@ type UserServiceServer interface {
 	Create(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	Update(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	Delete(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	Upload(UserService_UploadServer) error
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -107,6 +143,9 @@ func (*UnimplementedUserServiceServer) Update(context.Context, *UpdateUserReques
 }
 func (*UnimplementedUserServiceServer) Delete(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (*UnimplementedUserServiceServer) Upload(UserService_UploadServer) error {
+	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
 }
 func (*UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -204,6 +243,32 @@ func _UserService_Delete_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(UserServiceServer).Upload(&userServiceUploadServer{stream})
+}
+
+type UserService_UploadServer interface {
+	SendAndClose(*UploadUserAvatarResponse) error
+	Recv() (*UploadUserAvatarRequest, error)
+	grpc.ServerStream
+}
+
+type userServiceUploadServer struct {
+	grpc.ServerStream
+}
+
+func (x *userServiceUploadServer) SendAndClose(m *UploadUserAvatarResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *userServiceUploadServer) Recv() (*UploadUserAvatarRequest, error) {
+	m := new(UploadUserAvatarRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _UserService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "protos.UserService",
 	HandlerType: (*UserServiceServer)(nil),
@@ -229,6 +294,12 @@ var _UserService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_Delete_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "upload",
+			Handler:       _UserService_Upload_Handler,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "user_service.proto",
 }

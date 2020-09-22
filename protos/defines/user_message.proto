@@ -45,3 +45,10 @@ message DeleteUserRequest {
 }
 message DeleteUserResponse {
 }
+
+message UploadUserAvatarRequest {
+  bytes image = 1;
+}
+message UploadUserAvatarResponse {
+  string url = 1;
+}

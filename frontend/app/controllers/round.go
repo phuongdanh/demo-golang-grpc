@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
-	pb "my-app/app/protos"
+	pb "frontend/app/protos"
 )
 
 type Round struct {

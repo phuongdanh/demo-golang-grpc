@@ -10,6 +10,9 @@ module:testrunner
 GET     /                                       App.Index
 GET     /levels/create                          App.Create
 POST    /levels/create                          App.DoCreate
+GET     /levels/delete/:id                      App.Delete
+GET     /levels/upload                          App.UploadAvatar
+
 GET     /contact                                Page.Contact
 GET     /about                                  Page.About
 GET     /round                                  Round.Index

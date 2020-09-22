@@ -1,7 +1,7 @@
 package round
 import (
 	"context"
-	pb "my-app/app/protos"
+	pb "frontend/app/protos"
 	"google.golang.org/grpc"
 )
 

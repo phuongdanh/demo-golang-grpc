@@ -3,9 +3,10 @@ option go_package = ".;protos";
 package protos;
 
 import "user_message.proto";
+import "validate/validate.proto";
 
 message LoginRequest {
-  string email = 1;
+  string email = 1 [(validate.rules).string.email = true];
   string password = 2;
 }
 

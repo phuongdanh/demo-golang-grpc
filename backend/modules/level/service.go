@@ -1,8 +1,11 @@
 package level
 
-import "question.app/demo/system/database"
-import "question.app/demo/modules/question"
-import "log"
+import (
+    "question.app/demo/system/database"
+    "question.app/demo/modules/question"
+    "log"
+    "fmt"
+)
 
 var db = database.Conn()
 
@@ -24,6 +27,18 @@ func (this *Service) List() ([]Model) {
         res = append(res, level)
     }
     return res
+}
+
+func (this *Service) Get(id int32) (*Model, error) {
+    query := "SELECT id, name, default_score, created_at, updated_at FROM "+Model{}.TableName()+" WHERE deleted_at IS NULL AND id = "+fmt.Sprint(id);
+	db := database.Conn()
+	var item Model
+	err := db.QueryRow(query).Scan(&item.Id, &item.Name, &item.Default_score, &item.Created_at, &item.Updated_at)
+	if err != nil {
+		log.Printf("Failed: %v", err)
+		return nil, fmt.Errorf("Could not found that email")
+	}
+	return &item, nil
 }
 
 func (this *Service) GetQuestions() ([]question.Model) {
@@ -54,4 +69,21 @@ func (this *Service) Create(item Model) (*Model, error) {
         return nil, err
     }
     return &item, nil
+}
+
+func (this *Service) Delete(id int32) error {
+    _, err := this.Get(id)
+    if err != nil {
+        return fmt.Errorf("Could not found this item")
+    }
+    stmt, err := db.Prepare("UPDATE "+ Model{}.TableName() +" SET `deleted_at` = '2020-09-09' WHERE `id` = ?")
+    if err != nil {
+        log.Fatalf("Failed: %v", err)
+    }
+    defer stmt.Close()
+    if _, err := stmt.Exec(id); err != nil {
+        log.Fatalf("Failed: %v", err)
+        return err
+    }
+    return nil
 }

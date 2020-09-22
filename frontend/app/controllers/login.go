@@ -4,7 +4,7 @@ package controllers
 import (
 	"log"
 	"github.com/revel/revel"
-	"my-app/app/services/auth"
+	"frontend/app/services/auth"
 )
 
 type Login struct {

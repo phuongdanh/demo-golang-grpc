@@ -3,7 +3,7 @@ package services
 import (
 	"log"
 	"google.golang.org/grpc"
-	pb "my-app/app/protos"
+	pb "frontend/app/protos"
 )
 
 const (
@@ -42,6 +42,15 @@ func (this *Client) Level() pb.LevelServiceClient {
 		panic("Can not connect rpc server")
 	}
 	client := pb.NewLevelServiceClient(conn)
+	return client
+}
+
+func (this *Client) User() pb.UserServiceClient {
+	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		panic("Can not connect rpc server")
+	}
+	client := pb.NewUserServiceClient(conn)
 	return client
 }
 
