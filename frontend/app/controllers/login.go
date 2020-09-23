@@ -24,6 +24,11 @@ func (c Login) DoLogin() revel.Result {
 		log.Printf("Fail to login: %v", err.Error())
 		return c.RenderTemplate("Login/Index.html")
 	}
-	c.ViewArgs["Token"] = response["token"]
-	return c.RenderTemplate("Login/Index.html")
+	c.Session["token"] = response["token"]
+	return c.Redirect(App.Index)
+}
+
+func (c Login) Logout() revel.Result {
+	delete(c.Session, "token")
+	return c.Redirect(Login.Index)
 }

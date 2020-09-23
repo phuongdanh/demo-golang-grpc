@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/revel/revel"
+	"frontend/app/controllers"
 )
 
 var (
@@ -12,7 +13,22 @@ var (
 	BuildTime string
 )
 
+func checkUser(c *revel.Controller) revel.Result {
+	if c.Session["token"] == nil {
+		return c.Redirect(controllers.Login.Index)
+	}
+	return nil
+}
+func doNothing(c *revel.Controller) revel.Result {
+	return nil
+}
+
 func init() {
+	revel.InterceptFunc(doNothing, revel.BEFORE, &controllers.Login{})
+	revel.InterceptFunc(checkUser, revel.BEFORE, &controllers.App{})
+	revel.InterceptFunc(checkUser, revel.BEFORE, &controllers.Round{})
+	revel.InterceptFunc(checkUser, revel.BEFORE, &controllers.Page{})
+	
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
 		revel.PanicFilter,             // Recover from panics and display an error page instead.

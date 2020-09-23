@@ -16,7 +16,7 @@ type App struct {
 }
 
 func (c App) Index() revel.Result {
-	levels, err := (&level.Action{}).List()
+	levels, err := (&level.Action{}).List(fmt.Sprint(c.Session["token"]))
 	if err != nil {
 		log.Printf("Failed: %v", err)
 	}
@@ -38,7 +38,7 @@ func (c App) DoCreate() revel.Result {
 		Name: name,
 		DefaultScore: defaultScore,
 	}
-	_, err := (&level.Action{}).Create(rect)
+	_, err := (&level.Action{}).Create(fmt.Sprint(c.Session["token"]), rect)
 	c.ViewArgs["IsPost"] = true
 	if err != nil {
 		log.Printf("Fail to create: %v", err.Error())
@@ -53,7 +53,7 @@ func (c App) Delete() revel.Result {
 	if er != nil {
 		c.Flash.Error(er.Error())
 	} else {
-		err := (&level.Action{}).Delete(int32(idInt))
+		err := (&level.Action{}).Delete(fmt.Sprint(c.Session["token"]), int32(idInt))
 		if err != nil {
 			st, ok := status.FromError(err)
 			if !ok {
@@ -71,7 +71,7 @@ func (c App) Delete() revel.Result {
 }
 
 func (c App) UploadAvatar() revel.Result {
-	response, err := (&user.Action{}).UploadAvatar()
+	response, err := (&user.Action{}).UploadAvatar(fmt.Sprint(c.Session["token"]))
 	data := make(map[string]interface{})
 	if err != nil {
 		data["status"] = "failed"

@@ -11,7 +11,7 @@ import (
 
 type Action struct {}
 
-func (this Action) UploadAvatar () (map[string]interface{}, error) {
+func (this Action) UploadAvatar (token string) (map[string]interface{}, error) {
 	f := "./public/img/avatar_files/cbabc8b3-e0bb-4b14-bbe1-1c6cd985b557(1).jpg"
 	file, err := os.Open(f)
 	defer file.Close()
@@ -20,7 +20,7 @@ func (this Action) UploadAvatar () (map[string]interface{}, error) {
 		return nil, err
 	}
 	client := (&services.Client{}).User()
-	stream, err := client.Upload(utils.ContextRequest())
+	stream, err := client.Upload(utils.ContextRequest(token))
 	log.Println("Start uploading")
 	buf := make([]byte, 10)
 	

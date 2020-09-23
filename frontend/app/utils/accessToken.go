@@ -1,11 +1,18 @@
 package utils
 
+import (
+	"github.com/revel/revel"
+	"log"
+)
+
 type AccessToken struct {
 	value string
 }
 
-func (this *AccessToken) Get() string {
-	this.value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDA3OTg1MjAsImRhdGEiOnsiQ3JlYXRlZF9hdCI6IiIsIkRlbGV0ZWRfYXQiOnsiU3RyaW5nIjoiIiwiVmFsaWQiOmZhbHNlfSwiVXBkYXRlZF9hdCI6IiIsImVtYWlsIjoiZGVtb0BnbWFpbC5jb20iLCJpZCI6MSwibmFtZSI6IkFkbWluIiwicGFzc3dvcmQiOiJhYmNAMTIzNCJ9fQ.V2fGpOlUfK5mMaaPInnsHChjHa5h45qlaeirCzlexxY";
+func (this AccessToken) Get() string {
+	new := revel.Controller{}
+	log.Println(new.Session["token"])
+	this.value = "";
 	return this.value
 }
 

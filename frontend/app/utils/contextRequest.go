@@ -5,9 +5,9 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-func ContextRequest(params ...map[string]string) context.Context {
+func ContextRequest(token string, params ...map[string]string) context.Context {
 	header := map[string]string{
-		"authorization": "Bearer "+(&AccessToken{}).Get(), 
+		"authorization": "Bearer "+token,
 		"space":  "", 
 		"org": "", 
 		"limit": "", 

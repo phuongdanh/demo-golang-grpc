@@ -18,6 +18,7 @@ GET     /about                                  Page.About
 GET     /round                                  Round.Index
 GET     /login                                  Login.Index
 POST    /login                                  Login.DoLogin
+GET     /logout                                 Login.Logout
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
