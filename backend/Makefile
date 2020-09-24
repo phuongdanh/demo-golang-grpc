@@ -2,8 +2,7 @@
 
 build:
 	echo "Build the binary" ;\
-	cp ./.env ./build/
-	go build -i -v -o ./build/ ./main.go ;\
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./build/ ./main.go ;\
 	echo "Done!" ;\
 
 serve:

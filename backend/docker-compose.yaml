@@ -14,8 +14,8 @@ services:
       - .:/application
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=question
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=questions
       - MYSQL_USER=mysql_user
       - MYSQL_PASSWORD=mysql_password
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
@@ -33,11 +33,22 @@ services:
     working_dir: /go/src
     command: ./main
     ports:
-      - 50052:50051
+      - 9090:9090
     depends_on:
       - mysql
     networks:
       - backend
+  
+  front-envoy:
+    container_name: go_demo_envoy
+    image: envoyproxy/envoy-alpine:v1.14-latest
+    volumes:
+      - ./front-envoy.yaml:/etc/envoy/envoy.yaml
+    networks:
+      - backend
+    ports:
+      - "9901:9901"
+      - "50051:50051"
 volumes:
   mysql:
     driver: local

@@ -1,0 +1,15 @@
+body {
+  background-color: black;
+}
+.page_home {
+  width: 400;
+  min-height: 400;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 50px;
+  border-radius: 10px;
+}

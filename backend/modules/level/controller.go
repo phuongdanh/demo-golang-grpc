@@ -20,6 +20,7 @@ type Controller struct {
 }
 
 func (s *Controller) List(ctx context.Context, in *pb.ListLevelRequest) (*pb.ListLevelResponse, error) {
+	log.Println("Server received request to get list of levels")
 	var levelMessages []*pb.LevelMessage
 	service := Service{}
 	items := service.List()
@@ -46,15 +47,4 @@ func (s *Controller) Create(ctx context.Context, in *pb.CreateLevelRequest) (*pb
 	return &pb.CreateLevelResponse{
 		Item: item.ToMessage(),
 	}, nil
-}
-
-func (s *Controller) Delete(ctx context.Context, in *pb.DeleteLevelRequest) (*pb.DeleteLevelResponse, error) {
-	log.Print("Request delete")
-	service := Service{}
-	err := service.Delete(in.GetId())
-	if err != nil {
-		newErr := status.Errorf(codes.InvalidArgument, "Invalid argument")
-		return nil, newErr
-	}
-	return &pb.DeleteLevelResponse{}, nil
 }
