@@ -12,6 +12,7 @@ type Service struct {
 
 func (this Service) Login(input Model) (*user.Model, error) {
 	query := "SELECT id, name, email, password FROM "+user.Model{}.TableName()+" WHERE email = '"+input.Email+"'"
+	log.Println(query)
 	db := database.Conn()
 	var item user.Model
 	err := db.QueryRow(query).Scan(&item.Id, &item.Name, &item.Email, &item.Password)
@@ -22,5 +23,9 @@ func (this Service) Login(input Model) (*user.Model, error) {
 	if item.Password != input.Password {
 		return nil, fmt.Errorf("Password not correct")
 	}
-	return &item, nil
+	userData, err := (&user.Service{}).Get(item.Id)
+	if err != nil {
+		return nil, err
+	}
+	return userData, nil
 }

@@ -19,4 +19,10 @@ var Routes = []route{
 	route{"/protos.LevelService/Create", true},
 	route{"/protos.LevelService/Update", true},
 	route{"/protos.LevelService/Delete", true},
+
+	route{"/protos.UserService/List", true},
+	route{"/protos.UserService/Get", true},
+	route{"/protos.UserService/Create", true},
+	route{"/protos.UserService/Update", true},
+	route{"/protos.UserService/Delete", true},
 }

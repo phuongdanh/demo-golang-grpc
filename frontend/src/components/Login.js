@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import "../asset/css/pages/login.css"
 
 function Login({ email, password, onChange, onSubmit, error }) {
@@ -8,7 +8,7 @@ function Login({ email, password, onChange, onSubmit, error }) {
       <form onSubmit={ onSubmit }>
         <h1>Form Login</h1>
         <div className="form-group">
-        { error != "" && <div className="alert alert-danger">{error}</div> }
+        { error !== "" && <div className="alert alert-danger">{error}</div> }
           <label>Email address</label>
           <input 
             value={ email }

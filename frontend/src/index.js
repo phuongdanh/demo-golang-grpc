@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './asset/css/main.css';
-import App from './init/App';
 import * as serviceWorker from './serviceWorker';
+import AppRoute from './routes/AppRoute';
+import { StateProvider } from './store/store.js'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StateProvider>
+      <AppRoute />
+    </StateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

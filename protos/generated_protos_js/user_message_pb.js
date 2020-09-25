@@ -334,9 +334,11 @@ proto.protos.UserMessage.toObject = function(includeInstance, msg) {
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     email: jspb.Message.getFieldWithDefault(msg, 3, ""),
     password: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    deletedAt: jspb.Message.getFieldWithDefault(msg, 7, "")
+    about: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    deletedAt: jspb.Message.getFieldWithDefault(msg, 9, "")
   };
 
   if (includeInstance) {
@@ -391,13 +393,21 @@ proto.protos.UserMessage.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setAbout(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setUpdatedAt(value);
+      msg.setAvatar(value);
       break;
     case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedAt(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUpdatedAt(value);
+      break;
+    case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setDeletedAt(value);
       break;
@@ -458,24 +468,38 @@ proto.protos.UserMessage.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCreatedAt();
+  f = message.getAbout();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getUpdatedAt();
+  f = message.getAvatar();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
     );
   }
-  f = message.getDeletedAt();
+  f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getUpdatedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getDeletedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
       f
     );
   }
@@ -555,10 +579,10 @@ proto.protos.UserMessage.prototype.setPassword = function(value) {
 
 
 /**
- * optional string created_at = 5;
+ * optional string about = 5;
  * @return {string}
  */
-proto.protos.UserMessage.prototype.getCreatedAt = function() {
+proto.protos.UserMessage.prototype.getAbout = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -567,16 +591,16 @@ proto.protos.UserMessage.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.protos.UserMessage} returns this
  */
-proto.protos.UserMessage.prototype.setCreatedAt = function(value) {
+proto.protos.UserMessage.prototype.setAbout = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string updated_at = 6;
+ * optional string avatar = 6;
  * @return {string}
  */
-proto.protos.UserMessage.prototype.getUpdatedAt = function() {
+proto.protos.UserMessage.prototype.getAvatar = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -585,16 +609,16 @@ proto.protos.UserMessage.prototype.getUpdatedAt = function() {
  * @param {string} value
  * @return {!proto.protos.UserMessage} returns this
  */
-proto.protos.UserMessage.prototype.setUpdatedAt = function(value) {
+proto.protos.UserMessage.prototype.setAvatar = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * optional string deleted_at = 7;
+ * optional string created_at = 7;
  * @return {string}
  */
-proto.protos.UserMessage.prototype.getDeletedAt = function() {
+proto.protos.UserMessage.prototype.getCreatedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -603,8 +627,44 @@ proto.protos.UserMessage.prototype.getDeletedAt = function() {
  * @param {string} value
  * @return {!proto.protos.UserMessage} returns this
  */
-proto.protos.UserMessage.prototype.setDeletedAt = function(value) {
+proto.protos.UserMessage.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string updated_at = 8;
+ * @return {string}
+ */
+proto.protos.UserMessage.prototype.getUpdatedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.protos.UserMessage} returns this
+ */
+proto.protos.UserMessage.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional string deleted_at = 9;
+ * @return {string}
+ */
+proto.protos.UserMessage.prototype.getDeletedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.protos.UserMessage} returns this
+ */
+proto.protos.UserMessage.prototype.setDeletedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -2047,6 +2107,7 @@ proto.protos.UploadUserAvatarRequest.prototype.toObject = function(opt_includeIn
  */
 proto.protos.UploadUserAvatarRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, 0),
     image: msg.getImage_asB64()
   };
 
@@ -2085,6 +2146,10 @@ proto.protos.UploadUserAvatarRequest.deserializeBinaryFromReader = function(msg,
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setId(value);
+      break;
+    case 2:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setImage(value);
       break;
@@ -2117,10 +2182,17 @@ proto.protos.UploadUserAvatarRequest.prototype.serializeBinary = function() {
  */
 proto.protos.UploadUserAvatarRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getId();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
   f = message.getImage_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      1,
+      2,
       f
     );
   }
@@ -2128,16 +2200,34 @@ proto.protos.UploadUserAvatarRequest.serializeBinaryToWriter = function(message,
 
 
 /**
- * optional bytes image = 1;
- * @return {string}
+ * optional int32 id = 1;
+ * @return {number}
  */
-proto.protos.UploadUserAvatarRequest.prototype.getImage = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.protos.UploadUserAvatarRequest.prototype.getId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /**
- * optional bytes image = 1;
+ * @param {number} value
+ * @return {!proto.protos.UploadUserAvatarRequest} returns this
+ */
+proto.protos.UploadUserAvatarRequest.prototype.setId = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional bytes image = 2;
+ * @return {string}
+ */
+proto.protos.UploadUserAvatarRequest.prototype.getImage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * optional bytes image = 2;
  * This is a type-conversion wrapper around `getImage()`
  * @return {string}
  */
@@ -2148,7 +2238,7 @@ proto.protos.UploadUserAvatarRequest.prototype.getImage_asB64 = function() {
 
 
 /**
- * optional bytes image = 1;
+ * optional bytes image = 2;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getImage()`
@@ -2165,7 +2255,7 @@ proto.protos.UploadUserAvatarRequest.prototype.getImage_asU8 = function() {
  * @return {!proto.protos.UploadUserAvatarRequest} returns this
  */
 proto.protos.UploadUserAvatarRequest.prototype.setImage = function(value) {
-  return jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 

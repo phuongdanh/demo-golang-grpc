@@ -1,14 +1,18 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import "../asset/css/pages/login.css"
 import LoginComponent from "../components/Login"
-import { Redirect } from 'react-router-dom';
-const {AuthServiceClient} = require('../protos/auth_service_grpc_web_pb.js');
+import { Redirect } from 'react-router-dom'
+import { store } from '../store/store.js'
+import CookieHelper from "../utils/cookieHelper"
+import Config from "../utils/config"
+const {AuthServiceClient} = require('../protos/auth_service_grpc_web_pb.js')
 require("../protos/auth_service_pb.js")
 require("../protos/auth_message_pb.js")
 
 /* eslint-disable */
 function Login() {
-
+  const globalState = useContext(store)
+  const { dispatch } = globalState
   const [email, setEmail] = useState("demo@gmail.com")
   const [password, setPassword] = useState("abc@1234")
   const [redirect, setRedirect] = useState(null)
@@ -16,28 +20,28 @@ function Login() {
 
   const inputOnChange = (name, value) => {
     setError("")
-    if (name == "email") {
+    if (name === "email") {
       setEmail(value)
     }
-    if (name == "password") {
+    if (name === "password") {
       setPassword(value)
     }
   }
 
   function onSubmit (e) {
     e.preventDefault();
-    var authService = new AuthServiceClient('http://localhost:50051')
+    var authService = new AuthServiceClient(Config.API_URL)
     var request = new proto.protos.LoginRequest()
     request.setEmail(email)
     request.setPassword(password)
-    var metadata = {'custom-header-1': 'value1'};
+    var metadata = {};
     authService.login(request, metadata, function(err, response) {
       if (err) {
-        console.log(err.code);
         setError(err.message)
       } else {
-        console.log(response.getAccesstoken());
-        console.log(response.getUser().getName());
+        const cookieHelper = new CookieHelper()
+        cookieHelper.SetValue("accessToken", response.getAccesstoken())
+        dispatch({ type: 'LOGIN', accessToken: response.getAccesstoken() })
         setRedirect("/")
       }
     });
