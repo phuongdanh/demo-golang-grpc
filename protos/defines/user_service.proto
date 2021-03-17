@@ -10,4 +10,5 @@ service UserService {
   rpc create (CreateUserRequest) returns (CreateUserResponse);
   rpc update (UpdateUserRequest) returns (UpdateUserResponse);
   rpc delete (DeleteUserRequest) returns (DeleteUserResponse);
+  rpc upload(stream UploadUserAvatarRequest) returns (UploadUserAvatarResponse); 
 }

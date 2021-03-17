@@ -29,7 +29,7 @@ This project is purpose to understand how to use GRPC in Golang
   It will generate proto files, check it by looking at the ./backend/protos and ./frontend/protos
 
 ## Run app:
-  The system build with pure Golang for backend and Revel framework for frontend
+  The system build with pure Golang for backend and reactjs framework for frontend
 
 
 ### Run backend:

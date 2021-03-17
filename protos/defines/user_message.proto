@@ -7,9 +7,11 @@ message UserMessage {
   string name = 2;
   string email = 3;
   string password = 4;
-  string created_at = 5;
-  string updated_at = 6;
-  string deleted_at = 7;
+  string about = 5;
+  string avatar = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  string deleted_at = 9;
 }
 
 message ListUserRequest {
@@ -44,4 +46,12 @@ message DeleteUserRequest {
   int32 id = 1;
 }
 message DeleteUserResponse {
+}
+
+message UploadUserAvatarRequest {
+  int32 id = 1;
+  bytes image = 2;
+}
+message UploadUserAvatarResponse {
+  string url = 1;
 }

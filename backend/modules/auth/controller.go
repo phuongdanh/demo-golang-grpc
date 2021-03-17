@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"log"
 	"context"
 	pb "question.app/demo/protos"
 	"question.app/demo/support/jwt"
@@ -19,6 +20,7 @@ type Controller struct {
 }
 
 func (*Controller) Login(ctx context.Context, request *pb.LoginRequest) (*pb.LoginResponse, error)  {
+	log.Println("reveive the request")
 	input := Model{
 		request.GetEmail(), 
 		request.GetPassword(),
